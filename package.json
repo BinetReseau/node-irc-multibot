@@ -5,7 +5,7 @@
   "author": "Nadrieril <nadrieril@gmail.com>",
   "license": "ISC",
   "scripts": {
-    "start": "coffee bot.coffee",
+    "start": "coffee bot.coffee"
   },
 
   "dependencies": {
@@ -16,8 +16,5 @@
     "js-yaml": "^3.3.1",
     "lodash": "^3.9.3",
     "q": "^1.4.1"
-  },
-  "devDependencies": {
-    "coffee-script": "^1.9.3"
   }
 }
