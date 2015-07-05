@@ -1,0 +1,36 @@
+## IRC config
+server: irc.freenode.net
+serverconfig:
+  userName: Node-bot
+  # port: 6767
+  # secure: true
+  autoRejoin: true
+  stripColors: true
+
+
+## HTTP server config
+listen: 3000
+
+
+## Revocable keys
+authorized-keys:
+  user1: "foobar42"
+
+
+## Registered nicks/invite-only chans
+nickserv:
+  user1: "qwertyuiop"
+
+# chanserv:
+#   - "#node"
+
+
+## Entrypoints
+default_nick: node-multibot
+
+entrypoints:
+  entrypoint:
+    chan: "#node"
+    authorized_users:
+      - user1
+    # nick: node-multibot

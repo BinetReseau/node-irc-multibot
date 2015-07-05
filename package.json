@@ -1,0 +1,23 @@
+{
+  "name": "node-irc-multibot",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Nadrieril <nadrieril@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "start": "coffee bot.coffee",
+  },
+
+  "dependencies": {
+    "body-parser": "^1.13.1",
+    "coffee-script": "^1.9.3",
+    "express": "^4.13.0",
+    "irc": "^0.3.12",
+    "js-yaml": "^3.3.1",
+    "lodash": "^3.9.3",
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.9.3"
+  }
+}
