@@ -9,4 +9,4 @@ An IRC bot controlled via http(s) endpoints.
 
     npm start
 
-    echo "Hello, I'm a bot" | curl --data "key=qwertyuiop" --data-urlencode "message@-" localhost:3000/entrypoint
+    echo "Hello, I'm a bot" | ./pipe.sh qwertyuiop localhost:3000/entrypoint
