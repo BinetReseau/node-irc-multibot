@@ -144,12 +144,16 @@ _.forEach conf.entrypoints, (ep, url) ->
       return
 
     msg = req.body.message
-    if not msg? or msg == ""
-      console.error "#{user}:/#{url}: Empty message"
-      res.status(400).send("Empty message")
+    if not msg?
+      console.error "#{user}:/#{url}: No message specified"
+      res.status(400).send("No message specified")
       return
 
     msg = msg.trim()
+    if msg == ""
+      console.error "#{user}:/#{url}: Empty message, ignoring"
+      return
+
     console.log "<- #{user}:/#{url}:", msg
 
     nick = ep.nick ? conf.default_nick
