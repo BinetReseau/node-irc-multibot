@@ -6,6 +6,7 @@ yaml = require "js-yaml"
 Q = require "q"
 bodyParser = require "body-parser"
 
+unless String::trim then String::trim = -> @replace(/^\s+/, '').replace(/\s+$/, '')
 
 chanserv_invite = (client, nick, chan) ->
   Q.Promise (resolve, reject) =>
@@ -89,12 +90,12 @@ class IRCBot
 
 
   say: (nick, chan, msg) ->
+    msg = msg.trim()
     if msg == ""
-      console.error "Empty message"
       Q.reject()
     @get_client(nick).then (client) =>
       @join_chan(nick, chan).then () =>
-        console.log "Saying '#{msg}' on #{chan} with nick '#{nick}'"
+        console.log "-> #{nick}@#{chan}: #{msg}"
         client.say chan, msg
 
 
@@ -134,8 +135,8 @@ _.forEach conf.entrypoints, (ep, url) ->
     user = bot.authorize(key)
 
     if not user
-      console.error "Key '#{key}' cannot push to #{url}"
-      res.status(403).send("You are not allowed to perform this action")
+      console.error "Unknown key '#{key}'"
+      res.status(401).send("Unknown key")
       return
 
     if not user in ep["authorized_users"]
@@ -143,7 +144,12 @@ _.forEach conf.entrypoints, (ep, url) ->
       res.status(403).send("You are not allowed to perform this action")
       return
 
-    console.log "#{user}@#{url}:", req.body
+    if not req.body.message? or req.body.message == ""
+      console.error "#{user}:/#{url}: Empty message"
+      res.status(400).send("Empty message")
+      return
+
+    console.log "<- #{user}:/#{url}:", req.body.message
 
     nick = ep.nick ? conf.default_nick
     prefix = ep.prefix ? ""
