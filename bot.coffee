@@ -90,7 +90,6 @@ class IRCBot
 
 
   say: (nick, chan, msg) ->
-    msg = msg.trim()
     if msg == ""
       Q.reject()
     @get_client(nick).then (client) =>
@@ -144,24 +143,23 @@ _.forEach conf.entrypoints, (ep, url) ->
       res.status(403).send("You are not allowed to perform this action")
       return
 
-    if not req.body.message? or req.body.message == ""
+    msg = req.body.message
+    if not msg? or msg == ""
       console.error "#{user}:/#{url}: Empty message"
       res.status(400).send("Empty message")
       return
 
-    console.log "<- #{user}:/#{url}:", req.body.message
+    msg = msg.trim()
+    console.log "<- #{user}:/#{url}:", msg
 
     nick = ep.nick ? conf.default_nick
     prefix = ep.prefix ? ""
-    if req.body.message
-      bot.say nick, ep.chan, prefix + req.body.message
-      .then () ->
-        res.status(200).send("Ok")
-      .catch (err) ->
-        console.error err
-        res.status(500).send(err.toString())
-    else
-      res.status(400).send("Bad request")
+    bot.say nick, ep.chan, prefix + msg
+    .then () ->
+      res.status(200).send("Ok")
+    .catch (err) ->
+      console.error err
+      res.status(500).send(err.toString())
 
 
 app.listen conf.listen
